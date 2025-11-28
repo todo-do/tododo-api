@@ -1,5 +1,0 @@
-- port
-  - in
-    - createChallengeUseCase, createQuestUseCase 등이 포함 될 수 있다.
-  - out
-    - loadChallengePort, saveChallengePort -> Repository 인터페이스 로 사용될 수 있다.
