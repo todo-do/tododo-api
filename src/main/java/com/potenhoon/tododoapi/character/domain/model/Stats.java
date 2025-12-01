@@ -32,6 +32,10 @@ public class Stats {
         this.f = f;
     }
 
+    public static Stats getStats(Stats stats) {
+        return new Stats(stats.a, stats.b, stats.c, stats.d, stats.e, stats.f);
+    }
+
     public static Stats zero() {
         return new Stats(0, 0, 0, 0, 0, 0);
     }

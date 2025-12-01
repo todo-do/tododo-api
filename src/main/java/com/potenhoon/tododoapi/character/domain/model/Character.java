@@ -1,10 +1,6 @@
 package com.potenhoon.tododoapi.character.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -14,8 +10,9 @@ import java.util.UUID;
 public class Character {
 
     @Id
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
 
     @Column(nullable = false)
     private String name;

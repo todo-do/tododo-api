@@ -1,9 +1,11 @@
 package com.potenhoon.tododoapi.character.application.service.impl;
 
+import com.potenhoon.tododoapi.character.application.service.CharacterService;
 import com.potenhoon.tododoapi.character.domain.model.Character;
 import com.potenhoon.tododoapi.character.domain.model.Stats;
 import com.potenhoon.tododoapi.character.domain.repository.CharacterRepository;
-import com.potenhoon.tododoapi.character.application.service.CharacterService;
+import com.potenhoon.tododoapi.character.presentation.dto.CharacterCreateRequest;
+import com.potenhoon.tododoapi.character.presentation.dto.CharacterResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,14 +20,17 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public Character create(String name, Stats stats) {
-        Character character = Character.create(name, stats);
-        return repository.save(character);
+    public CharacterResponse create(CharacterCreateRequest request) {
+        Stats stats = request.stats() == null ? Stats.zero() : request.stats().toStats();
+        Character character = Character.create(request.name(), stats);
+        var saved = repository.save(character);
+        return CharacterResponse.from(saved);
     }
 
     @Override
-    public Character get(UUID id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Character not found: " + id));
+    public CharacterResponse get(UUID id) {
+        var found = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found: " + id));
+        return CharacterResponse.from(found);
     }
 }
