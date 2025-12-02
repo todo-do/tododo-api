@@ -1,7 +1,5 @@
 package com.potenhoon.tododoapi.character.presentation.dto;
 
-import com.potenhoon.tododoapi.character.domain.model.Stats;
-
 import java.util.UUID;
 
 public record CharacterCreateRequest(
@@ -9,5 +7,4 @@ public record CharacterCreateRequest(
         StatsRequest stats,
         UUID userId
 ) {
-
 }

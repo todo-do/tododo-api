@@ -1,6 +1,15 @@
-package com.potenhoon.tododoapi.character.domain.model;
+﻿package com.potenhoon.tododoapi.character.domain.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -11,43 +20,51 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Embedded
+    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
+    private UUID userId;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "stats_id", columnDefinition = "BINARY(16)")
     private Stats stats;
 
     protected Character() {
         // for JPA
     }
 
-    private Character(UUID id, String name, Stats stats) {
-        this.id = Objects.requireNonNull(id, "id must not be null");
+    private Character(String name, UUID userId, Stats stats) {
         this.name = Objects.requireNonNull(name, "name must not be null").trim();
+        this.userId = Objects.requireNonNull(userId, "userId must not be null");
         this.stats = Objects.requireNonNull(stats, "stats must not be null");
         if (this.name.isEmpty()) {
             throw new IllegalArgumentException("name must not be blank");
         }
     }
 
-    public static Character create(String name) {
-        return create(name, Stats.zero());
+    public static Character create(String name, UUID userId) {
+        return create(name, userId, Stats.zero());
     }
 
-    public static Character create(String name, Stats stats) {
+    public static Character create(String name, UUID userId, Stats stats) {
         Stats resolved = stats == null ? Stats.zero() : stats;
-        return new Character(UUID.randomUUID(), name, resolved);
+        return new Character(name, userId, resolved);
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public UUID getUserId() {
+        return userId;
     }
 
     public Stats getStats() {

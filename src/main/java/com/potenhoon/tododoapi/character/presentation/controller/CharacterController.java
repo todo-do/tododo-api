@@ -1,4 +1,4 @@
-package com.potenhoon.tododoapi.character.presentation.controller;
+﻿package com.potenhoon.tododoapi.character.presentation.controller;
 
 import com.potenhoon.tododoapi.character.presentation.dto.CharacterCreateRequest;
 import com.potenhoon.tododoapi.character.presentation.dto.CharacterResponse;
@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
-@RequestMapping("/api/characters")
+@RequestMapping("/characters")
 public class CharacterController {
 
     private final CharacterService characterService;
@@ -30,7 +28,7 @@ public class CharacterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CharacterResponse> get(@PathVariable UUID id) {
+    public ResponseEntity<CharacterResponse> get(@PathVariable Long id) {
         CharacterResponse found = characterService.get(id);
         return ResponseEntity.ok(found);
     }

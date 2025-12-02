@@ -1,29 +1,38 @@
 package com.potenhoon.tododoapi.character.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.*;
 
-@Embeddable
+import java.util.Objects;
+import java.util.UUID;
+
+@Entity
+@Table(name = "stats")
 public class Stats {
 
-    @Column(name = "stat_a")
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "stat_a", nullable = false)
     private int a;
-    @Column(name = "stat_b")
+    @Column(name = "stat_b", nullable = false)
     private int b;
-    @Column(name = "stat_c")
+    @Column(name = "stat_c", nullable = false)
     private int c;
-    @Column(name = "stat_d")
+    @Column(name = "stat_d", nullable = false)
     private int d;
-    @Column(name = "stat_e")
+    @Column(name = "stat_e", nullable = false)
     private int e;
-    @Column(name = "stat_f")
+    @Column(name = "stat_f", nullable = false)
     private int f;
 
     protected Stats() {
         // for JPA
     }
 
-    public Stats(int a, int b, int c, int d, int e, int f) {
+    private Stats(int a, int b, int c, int d, int e, int f) {
+
         this.a = a;
         this.b = b;
         this.c = c;
@@ -32,12 +41,12 @@ public class Stats {
         this.f = f;
     }
 
-    public static Stats getStats(Stats stats) {
-        return new Stats(stats.a, stats.b, stats.c, stats.d, stats.e, stats.f);
+    public static Stats createStat(int a, int b, int c, int d, int e, int f) {
+        return new Stats(a, b, c, d, e, f);
     }
 
     public static Stats zero() {
-        return new Stats(0, 0, 0, 0, 0, 0);
+        return createStat(0, 0, 0, 0, 0, 0);
     }
 
     public int getA() {
