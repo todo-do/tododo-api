@@ -1,17 +1,19 @@
 package com.potenhoon.tododoapi.character.domain.model;
 
-import jakarta.persistence.*;
-
-import java.util.Objects;
-import java.util.UUID;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "stats")
 public class Stats {
 
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "stat", nullable = false)
@@ -22,9 +24,8 @@ public class Stats {
     }
 
     private Stats(int stat) {
-
         this.stat = stat;
-      }
+    }
 
     public static Stats createStat(int stat) {
         return new Stats(stat);
@@ -37,6 +38,4 @@ public class Stats {
     public int getStat() {
         return stat;
     }
-
-
 }

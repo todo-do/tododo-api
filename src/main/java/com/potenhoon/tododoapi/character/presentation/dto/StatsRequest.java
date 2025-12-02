@@ -4,6 +4,6 @@ import com.potenhoon.tododoapi.character.domain.model.Stats;
 
 public record StatsRequest(int stat) {
     public Stats toStats() {
-        return Stats.createStat(0);
+        return Stats.createStat(stat);
     }
 }

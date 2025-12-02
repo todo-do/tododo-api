@@ -30,7 +30,7 @@ public class Character {
     private UUID userId;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "stats_id", columnDefinition = "BINARY(16)")
+    @JoinColumn(name = "stats_id")
     private Stats stats;
 
     protected Character() {
