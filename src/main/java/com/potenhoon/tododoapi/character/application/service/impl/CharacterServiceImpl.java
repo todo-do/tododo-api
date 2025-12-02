@@ -8,6 +8,8 @@ import com.potenhoon.tododoapi.character.presentation.dto.CharacterCreateRequest
 import com.potenhoon.tododoapi.character.presentation.dto.CharacterResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class CharacterServiceImpl implements CharacterService {
 
@@ -26,9 +28,9 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public CharacterResponse getCharacterById(Long id) {
-        Character foundcharacter = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Character not found: " + id));
+    public CharacterResponse getCharacterById(UUID userId) {
+        Character foundcharacter = repository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Character not found: " + userId));
         return CharacterResponse.from(foundcharacter);
     }
 }
