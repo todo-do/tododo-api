@@ -7,7 +7,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -29,8 +28,7 @@ public class Character {
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID userId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "stats_id")
+    @OneToOne(mappedBy = "character", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, optional = false)
     private Stats stats;
 
     protected Character() {
@@ -40,7 +38,7 @@ public class Character {
     private Character(String name, UUID userId, Stats stats) {
         this.name = Objects.requireNonNull(name, "name must not be null"); // 닉네임 정책 고민
         this.userId = Objects.requireNonNull(userId, "userId must not be null");
-        this.stats = Objects.requireNonNull(stats, "stats must not be null");
+        setStats(stats);
         if (this.name.isEmpty()) {
             throw new IllegalArgumentException("name must not be blank");
         }
@@ -69,5 +67,10 @@ public class Character {
 
     public Stats getStats() {
         return stats;
+    }
+
+    private void setStats(Stats stats) {
+        this.stats = Objects.requireNonNull(stats, "stats must not be null");
+        this.stats.assignTo(this);
     }
 }
