@@ -38,7 +38,7 @@ public class Character {
     }
 
     private Character(String name, UUID userId, Stats stats) {
-        this.name = Objects.requireNonNull(name, "name must not be null").trim();
+        this.name = Objects.requireNonNull(name, "name must not be null"); // 닉네임 정책 고민
         this.userId = Objects.requireNonNull(userId, "userId must not be null");
         this.stats = Objects.requireNonNull(stats, "stats must not be null");
         if (this.name.isEmpty()) {

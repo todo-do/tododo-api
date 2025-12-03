@@ -33,6 +33,7 @@ public class CharacterController {
     @GetMapping("/{id}")
 public ResponseEntity<CharacterResponse> getCharacterById(@PathVariable UUID userId) {
     CharacterResponse found = characterService.getCharacterById(userId);
-        return ResponseEntity.ok(found);
+        return ResponseEntity.ok(found); // userId는 테스트 목적으로 향후 변경 예정
     }
+    
 }
