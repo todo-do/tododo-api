@@ -8,9 +8,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+@Builder(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "stats")
 public class Stats {
@@ -24,27 +31,18 @@ public class Stats {
     @JoinColumn(name = "character_id")
     private Character character;
 
+    @Builder.Default
     @Column(name = "stat", nullable = false)
-    private int stat;
-
-    protected Stats() {
-        // for JPA
-    }
-
-    private Stats(int stat) {
-        this.stat = stat;
-    }
+    private int stat = 0;
 
     void assignTo(Character character) {
         this.character = Objects.requireNonNull(character, "character must not be null");
     }
 
     public static Stats createStat(int stat) {
-        return new Stats(stat);
-    }
-
-    public static Stats zero() {
-        return createStat(0);
+        return Stats.builder()
+                .stat(stat)
+                .build();
     }
 
     public int getStat() {

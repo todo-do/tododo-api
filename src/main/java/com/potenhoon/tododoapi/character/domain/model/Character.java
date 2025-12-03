@@ -45,12 +45,11 @@ public class Character {
     }
 
     public static Character create(String name, UUID userId) {
-        return create(name, userId, Stats.zero());
+        return create(name, userId, Stats.builder().build());
     }
 
     public static Character create(String name, UUID userId, Stats stats) {
-        Stats resolved = stats == null ? Stats.zero() : stats;
-        return new Character(name, userId, resolved);
+        return new Character(name, userId, Objects.requireNonNull(stats, "stats must not be null"));
     }
 
     public Long getId() {

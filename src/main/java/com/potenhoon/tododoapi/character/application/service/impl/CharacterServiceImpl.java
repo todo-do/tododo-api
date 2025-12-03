@@ -22,8 +22,9 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterResponse createCharacter(CharacterCreateRequest request) {
-        Stats stats = request.stats() == null ? Stats.zero() : request.stats().toStats();
-        Character character = Character.create(request.name(), request.userId(), stats);
+        Character character = request.stats() == null
+                ? Character.create(request.name(), request.userId())
+                : Character.create(request.name(), request.userId(), request.stats().toStats());
         Character charactersaved = repository.save(character);
         return toResponse(charactersaved);
     }
