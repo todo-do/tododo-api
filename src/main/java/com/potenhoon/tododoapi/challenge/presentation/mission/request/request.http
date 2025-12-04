@@ -1,0 +1,33 @@
+### Mission 생성 테스트
+POST http://localhost:8080/mission
+Content-Type: application/json
+
+{
+  "questId": 1001,
+  "userId": 7,
+  "title": "헬스 30분 하기",
+  "expiredAt": "2025-01-20T23:59:59"
+}
+
+### Mission 생성 (만료일 없음)
+POST http://localhost:8080/mission
+Content-Type: application/json
+
+{
+  "questId": 2002,
+  "userId": 8,
+  "title": "책 10페이지 읽기",
+  "expiredAt": null
+}
+
+### 실패 케이스 1 (questId = null)
+POST http://localhost:8080/mission
+Content-Type: application/json
+
+{
+"questId": null,
+"userId": 1,
+"title": "테스트",
+"expiredAt": "2025-01-15T12:00:00"
+}
+
